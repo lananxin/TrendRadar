@@ -53,26 +53,16 @@ schedule:
 #   - name: 显示名称（可自定义，修改后不影响运行）
 # ===============================================================
 platforms:
-  enabled: false                         # 是否启用热榜平台抓取
+  enabled: true                         # 是否启用热榜平台抓取
   sources:
-    - id: "toutiao"
-      name: "今日头条"
-    - id: "baidu"
-      name: "百度热搜"
-    - id: "wallstreetcn-hot"
-      name: "华尔街见闻"
-    - id: "thepaper"
-      name: "澎湃新闻"
-    - id: "bilibili-hot-search"
-      name: "bilibili 热搜"
-    - id: "ifeng"
-      name: "凤凰网"
-    - id: "weibo"
-      name: "微博"
     - id: "douyin"
       name: "抖音"
+    - id: "weibo"
+      name: "微博"
     - id: "zhihu"
       name: "知乎"
+    - id: "baidu"
+      name: "百度热搜"
 
 
 
@@ -177,19 +167,19 @@ display:
   #   1. 在此列表中
   #   2. 下方 regions 中对应开关为 true
   region_order:
-    - new_items                       # 1️⃣ 新增热点区域
     - hotlist                       # 2️⃣ 热榜区域（关键词匹配）
+    - ai_analysis                       # 5️⃣ AI 分析区域
+    - new_items                       # 1️⃣ 新增热点区域
     - rss                       # 3️⃣ RSS 订阅区域
     - standalone                       # 4️⃣ 独立展示区
-    - ai_analysis                       # 5️⃣ AI 分析区域
   regions:
-    new_items: false # 新增热点区域（含热榜新增 + RSS 新增）
     hotlist: true # 热榜区域（关键词匹配的热点新闻）
+    ai_analysis: true # AI 分析区域
+    new_items: false # 新增热点区域（含热榜新增 + RSS 新增）
     rss: false # RSS 订阅区域
     standalone: false # 独立展示区（完整热榜/RSS，不受关键词过滤）
-    ai_analysis: true # AI 分析区域
   standalone:
-    platforms: ["baidu","toutiao","douyin"] # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
+    platforms: [] # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
     rss_feeds: []                     # RSS 源 ID 列表（如 ["hacker-news"]）
     max_items: 20                     # 每个源最多展示条数（0=不限制）
 
@@ -416,9 +406,9 @@ ai_analysis:
 
   include_rss: false                # 是否包含 RSS 内容进行分析
   
-  include_standalone: true          # 是否将独立展示区数据纳入 AI 分析（只需上方 display 区的 standalone 配置了平台/RSS 即可）
+  include_standalone: false          # 是否将独立展示区数据纳入 AI 分析（只需上方 display 区的 standalone 配置了平台/RSS 即可）
 
-  include_rank_timeline: true       # 是否传递完整排名时间线
+  include_rank_timeline: false       # 是否传递完整排名时间线
                                     # false: 使用简化格式（排名范围+时间范围+出现次数）
                                     # true: 传递完整排名变化轨迹（如 1(09:30)→2(10:00)→0(11:00)）
                                     # 启用后 AI 能更精确分析热度趋势，但会额外增加 token 消耗（0.5 倍到 1 倍）
